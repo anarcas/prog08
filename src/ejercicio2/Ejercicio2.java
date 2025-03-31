@@ -3,10 +3,17 @@ package ejercicio2;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.thoughtworks.xstream.XStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+
 /**
  * Ejercicio 2: Lectura y escritura de objetos. XML.
  *
- * @author apellidos y nombre del alumno
+ * @author Antonio Naranjo Castillo
  */
 
 public class Ejercicio2 {

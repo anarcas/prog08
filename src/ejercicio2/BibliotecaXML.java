@@ -1,6 +1,10 @@
 package ejercicio2;
 
 import com.thoughtworks.xstream.XStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Clase que permite serializar un objeto Biblioteca al formato XML y 
@@ -11,11 +15,11 @@ import com.thoughtworks.xstream.XStream;
 public class BibliotecaXML {
     
      // Ruta del archivo donde se lee y escribe el objeto Biblioteca
-    private String rutaArchivo;
+    private final String rutaArchivo;
     
     
     // Objeto Xstream que permite la L/E con archivos XML
-    private XStream xstream;
+    private final XStream xstream;
 
     /**
      * Metodo constructor
@@ -42,7 +46,16 @@ public class BibliotecaXML {
      */    
     public void escribir(Biblioteca biblioteca) {
         // Incluir el codigo que debe realizar el metodo
+         try (FileWriter writer = new FileWriter(rutaArchivo)) {
+            String xml = xstream.toXML(biblioteca);
+            writer.write(xml);
+            System.out.println("Biblioteca escrita correctamente en " + rutaArchivo);
+        } catch (IOException e) {
+            System.err.println("Error al escribir el archivo: " + e.getMessage());
+        }
     }
+    
+    
     
     // 3.2. Metodo leer()
      /**
@@ -50,6 +63,17 @@ public class BibliotecaXML {
      * @return Objecto Biblioteca que estaba almacenado en el archivo de texto.
      */
     public Biblioteca leer() {
-        return null; // Sustituir este return por el codigo que resuelve el ejercicio
+StringBuilder contenido = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                contenido.append(linea).append("\n");
+            }
+            return (Biblioteca) xstream.fromXML(contenido.toString());
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return new Biblioteca(); // Retorna una biblioteca vacía si hay error
     }
+    
 }

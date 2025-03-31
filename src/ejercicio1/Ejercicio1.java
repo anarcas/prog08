@@ -11,7 +11,7 @@ import java.util.List;
  * Ejercicio 1: Lectura/escritura de una biblioteca de libros en ficheros de
  * texto.
  *
- * @author apellidos y nombre del alumno
+ * @author Antonio Naranjo Castillo
  */
 public class Ejercicio1 {
 
