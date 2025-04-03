@@ -55,9 +55,13 @@ public class Ejercicio1 {
         // Se instancia el objeto biblioteca
         biblioteca = new Biblioteca();
 
+        
         // Se establece el flujo de entrada
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(rutaLibros), "UTF-8"))) {
-        //try (BufferedReader br = new BufferedReader(new FileReader(rutaLibros))) {
+        
+        // Se comanta un intento de forzar la codificación UTF-8 para reproducir los caracteres especiales
+        // try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(rutaLibros), "UTF-8"))) {
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaLibros))) {
             
             String linea;
             
@@ -97,9 +101,13 @@ public class Ejercicio1 {
         System.out.println("Abriendo archivo de la biblioteca...");
         rutaBiblioteca = System.getProperty("user.dir") + "/recursos/Biblioteca.txt";
 
+        
         // Se establece el flujo de salida
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaBiblioteca), "UTF-8"))) {
-        //try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBiblioteca))) {
+        
+        // Se comanta un intento de forzar la codificación UTF-8 para reproducir los caracteres especiales
+        // try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaBiblioteca), "UTF-8"))) {
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBiblioteca))) {
             bw.write("*******************************************\n");
             bw.write("LIBRO DE LIBROS\n");
             bw.write("*******************************************\n");
