@@ -1,8 +1,8 @@
 <ejercicio2.Biblioteca>
   <libros>
     <ejercicio2.Libro>
-      <titulo>El enigma de la monta√±a</titulo>
-      <autor>Carlos Gonz√°lez</autor>
+      <titulo>El enigma de la montaÒa</titulo>
+      <autor>Carlos Gonzalez</autor>
       <capitulos>
         <string>La llamada del destino</string>
         <string>El ascenso peligroso</string>
@@ -14,14 +14,14 @@
     </ejercicio2.Libro>
     <ejercicio2.Libro>
       <titulo>Caminos de la mente</titulo>
-      <autor>Elena Rodr√≠guez</autor>
+      <autor>Elena Rodri≠guez</autor>
       <capitulos>
         <string>El despertar de la consciencia</string>
-        <string>La b√∫squeda del yo</string>
+        <string>La busqueda del yo</string>
         <string>Pensamientos y realidades</string>
         <string>Trascender el ego</string>
       </capitulos>
-      <genero>Filosof√≠a</genero>
+      <genero>Filosofi≠a</genero>
       <fechaCreacion>2019-09-30</fechaCreacion>
     </ejercicio2.Libro>
   </libros>

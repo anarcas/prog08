@@ -52,26 +52,33 @@ public class Ejercicio1 {
         System.out.println("Abriendo archivo de libros...");
         rutaLibros = System.getProperty("user.dir") + "/recursos/ListadoLibros.txt";
         
-        // Se instancia la variable biblioteca
+        // Se instancia el objeto biblioteca
         biblioteca = new Biblioteca();
 
-        // Se establece el flujo de entrada tal que el BufferedReader se cerrará al finalizar
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaLibros))) {
+        // Se establece el flujo de entrada
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(rutaLibros), "UTF-8"))) {
+        //try (BufferedReader br = new BufferedReader(new FileReader(rutaLibros))) {
+            
             String linea;
+            
             while ((linea = br.readLine()) != null) { // Mientras haya líneas que leer, se sigue iterando
-                partes = linea.split(";"); // Se divide la línea en partes usando el carácter de punto y coma como delimitador
-                if (partes.length == 5) { // Si la línea tiene exactamente 5 partes, se procesan los datos
-                    titulo = partes[0];
-                    autor = partes[1];
-                    fechaCreacion = LocalDate.parse(partes[2]);
-                    genero = partes[3];
-                    capitulos = List.of(partes[4].split(","));
+                
+                // Se divide la línea en partes usando el carácter de punto y coma como delimitador
+                partes = linea.split(";");
 
-                    // Se instancia el libro con los datos obtenidos
-                    libro = new Libro(titulo, autor, fechaCreacion, capitulos, genero);
-                    // Se añade el libro a la biblioteca
-                    biblioteca.add(libro);
-                }
+                // Se procesan los datos
+                titulo = partes[0];
+                autor = partes[1];
+                fechaCreacion = LocalDate.parse(partes[2]);
+                genero = partes[3];
+                capitulos = List.of(partes[4].split(","));
+
+                // Se instancia el libro con los datos obtenidos
+                libro = new Libro(titulo, autor, fechaCreacion, capitulos, genero);
+
+                // Se añade el libro a la biblioteca
+                biblioteca.add(libro);
+                
             }
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -90,8 +97,9 @@ public class Ejercicio1 {
         System.out.println("Abriendo archivo de la biblioteca...");
         rutaBiblioteca = System.getProperty("user.dir") + "/recursos/Biblioteca.txt";
 
-        // Se establece el flujo de salida tal que el BufferedWriter se cerrará al finalizar
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBiblioteca))) {
+        // Se establece el flujo de salida
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaBiblioteca), "UTF-8"))) {
+        //try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBiblioteca))) {
             bw.write("*******************************************\n");
             bw.write("LIBRO DE LIBROS\n");
             bw.write("*******************************************\n");
@@ -100,19 +108,21 @@ public class Ejercicio1 {
 
             // Recorremos cada línea (representación de un libro) en el array de libros
             for (String linea : libros) {
+                
                 // Se verifica que la línea no está vacía
                 if (!linea.trim().isEmpty()) {
+
                     // Se formatean los datos dividiendo la línea con el delimitador ";"
                     datos = linea.split(";");
-                    // Si la línea tiene al menos 5 partes (título, autor, fecha, género, capítulos), se procesa
-                    if (datos.length >= 5) {
-                        bw.write("TITULO DEL LIBRO:" + datos[0].replace("#", "") + "\n");
-                        bw.write("AUTOR:" + datos[1] + "\n");
-                        bw.write("FECHA DE CREACIÓN:" + datos[2] + "\n");
-                        bw.write("GENERO:" + datos[3] + "\n");
-                        bw.write("CAPITULOS:" + datos[4] + "\n");
-                        bw.write("*******************************************\n");
-                    }
+
+                    // Se procesa los datos
+                    bw.write("TITULO DEL LIBRO:" + datos[0].replace("#", "") + "\n");
+                    bw.write("AUTOR:" + datos[1] + "\n");
+                    bw.write("FECHA DE CREACIÓN:" + datos[2] + "\n");
+                    bw.write("GENERO:" + datos[3] + "\n");
+                    bw.write("CAPITULOS:" + datos[4] + "\n");
+                    bw.write("*******************************************\n");
+
                 }
             }
         } catch (IOException e) {

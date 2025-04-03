@@ -48,15 +48,13 @@ public class BibliotecaXML {
     public void escribir(Biblioteca biblioteca) {
         // Incluir el codigo que debe realizar el metodo
         
-        // Se crea un flujo de salida para escribir en el archivo, se cerrará al finalizar.
+        // Se crea un flujo de salida para escribir en el archivo.
         try (FileWriter writer = new FileWriter(rutaArchivo)) {
             // Convierte el objeto 'biblioteca' a un formato XML usando XStream y lo guarda en la variable 'xml'
             // El método 'toXML' serializa el XML a desde el objeto correspondiente.
             String xml = xstream.toXML(biblioteca);
             // Escribe el contenido XML generado en el archivo especificado por 'rutaArchivo'
             writer.write(xml);
-            // Se imprime el mensaje en consola
-            System.out.println("Biblioteca escrita correctamente en " + rutaArchivo);
         } catch (IOException e) {
             // Se imprime un mensaje de error en la consola con la descripción del problema.
             System.err.println("Error al escribir el archivo: " + e.getMessage());
@@ -73,7 +71,7 @@ public class BibliotecaXML {
     public Biblioteca leer() {
         // Se crea un objeto StringBuilder llamado 'contenido' para ir acumulando el contenido del archivo.
         StringBuilder contenido = new StringBuilder();
-        // Se inicia un flujo de entrada que se cerrará al terminar.
+        // Se inicia un flujo de entrada.
         try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
             // Se declara una variable 'linea' para leer cada línea del archivo.
             String linea;
