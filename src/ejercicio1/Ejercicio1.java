@@ -1,10 +1,7 @@
 package ejercicio1;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,14 +26,23 @@ public class Ejercicio1 {
         // Constantes
         
         // Variables de entrada
-        String rutaLibros = System.getProperty("user.dir") + "/recursos/ListadoLibros.txt";
+        String rutaLibros;
 
         // Variables de salida
-        String rutaBiblioteca = System.getProperty("user.dir") + "/recursos/Biblioteca.txt";
+        String rutaBiblioteca;
 
         // Variables auxiliares
-        Biblioteca biblioteca = new Biblioteca();
-
+        Biblioteca biblioteca;
+        Libro libro;
+        String[] partes;
+        String titulo;
+        String autor;
+        LocalDate fechaCreacion;
+        String genero;
+        String[] libros;
+        String[] datos;
+        List<String> capitulos;
+        
         
         //----------------------------------------------
         //       Entrada de datos + Procesamiento
@@ -44,19 +50,26 @@ public class Ejercicio1 {
         
         // Abrimos archivo de contactos ListadoLibros.txt
         System.out.println("Abriendo archivo de libros...");
+        rutaLibros = System.getProperty("user.dir") + "/recursos/ListadoLibros.txt";
+        
+        // Se instancia la variable biblioteca
+        biblioteca = new Biblioteca();
 
+        // Se establece el flujo de entrada tal que el BufferedReader se cerrará al finalizar
         try (BufferedReader br = new BufferedReader(new FileReader(rutaLibros))) {
             String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] partes = linea.split(";");
-                if (partes.length == 5) {
-                    String titulo = partes[0];
-                    String autor = partes[1];
-                    LocalDate fechaCreacion = LocalDate.parse(partes[2]);
-                    String genero = partes[3];
-                    List<String> capitulos = List.of(partes[4].split(","));
+            while ((linea = br.readLine()) != null) { // Mientras haya líneas que leer, se sigue iterando
+                partes = linea.split(";"); // Se divide la línea en partes usando el carácter de punto y coma como delimitador
+                if (partes.length == 5) { // Si la línea tiene exactamente 5 partes, se procesan los datos
+                    titulo = partes[0];
+                    autor = partes[1];
+                    fechaCreacion = LocalDate.parse(partes[2]);
+                    genero = partes[3];
+                    capitulos = List.of(partes[4].split(","));
 
-                    Libro libro = new Libro(titulo, autor, fechaCreacion, capitulos, genero);
+                    // Se instancia el libro con los datos obtenidos
+                    libro = new Libro(titulo, autor, fechaCreacion, capitulos, genero);
+                    // Se añade el libro a la biblioteca
                     biblioteca.add(libro);
                 }
             }
@@ -75,19 +88,23 @@ public class Ejercicio1 {
         
         // Abrimos el archivo de la Biblioteca de libros Biblioteca.txt
         System.out.println("Abriendo archivo de la biblioteca...");
+        rutaBiblioteca = System.getProperty("user.dir") + "/recursos/Biblioteca.txt";
 
+        // Se establece el flujo de salida tal que el BufferedWriter se cerrará al finalizar
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaBiblioteca))) {
             bw.write("*******************************************\n");
             bw.write("LIBRO DE LIBROS\n");
             bw.write("*******************************************\n");
             // Obtenemos el texto de los libros desde toString()
-            String[] libros = biblioteca.toString().split("\n");
+            libros = biblioteca.toString().split("\n");
 
+            // Recorremos cada línea (representación de un libro) en el array de libros
             for (String linea : libros) {
-                // Verificamos si la línea no está vacía
+                // Se verifica que la línea no está vacía
                 if (!linea.trim().isEmpty()) {
-                    // Formateamos el contenido correctamente para que coincida con el formato deseado
-                    String[] datos = linea.split(";");
+                    // Se formatean los datos dividiendo la línea con el delimitador ";"
+                    datos = linea.split(";");
+                    // Si la línea tiene al menos 5 partes (título, autor, fecha, género, capítulos), se procesa
                     if (datos.length >= 5) {
                         bw.write("TITULO DEL LIBRO:" + datos[0].replace("#", "") + "\n");
                         bw.write("AUTOR:" + datos[1] + "\n");
@@ -102,8 +119,7 @@ public class Ejercicio1 {
             System.err.println("Error al escribir el archivo: " + e.getMessage());
         }
 
-        System.out.println("Archivos procesados correctamente.");
-
+        
         System.out.println("Cerrando archivo de la biblioteca...");
 
         System.out.println();
